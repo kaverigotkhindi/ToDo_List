@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const Form = ({ inputText , setInputText , todos , setTodos }) =>{
+const Form = ({ inputText , setInputText , todos , setTodos ,status , setStatus }) =>{
 const inputTextHandler = (e) => {
   
   setInputText(e.target.value);
@@ -10,9 +10,13 @@ const inputTextHandler = (e) => {
 const submitTodoHandler = (e) =>{
   e.preventDefault();
   //[ { name : meeting , completed : false , id : Math.random()*1000},...already_added_todos]
-  setTodos([ { text : inputText , completed : false , id : Math.random()*1000 },... todos ] );
+  setTodos([... todos, { text : inputText , completed : false , id : Math.random()*1000 } ] );
 setInputText("");//set the input box to blank after the recently submitted todo is added to the list below
 
+}
+
+const statusHandler = (e) =>{
+  setStatus(e.target.value);
 }
 
 
@@ -22,10 +26,12 @@ return(
       <button onClick={ submitTodoHandler } className="todo-button" type="submit">
         <i className="fas fa-plus-square"></i>
       </button>
+      
       <div className="select">
-        <select name="todos" className="filter-todo">
+        <select onChange={ statusHandler } name="todos" className="filter-todo">
+        <option value="Select the status" select hidden>Select the status</option>
           <option value="all">All</option>
-          <option value="completed">Completed</option>
+          <option value="completed" >Completed</option>
           <option value="uncompleted">Uncompleted</option>
         </select>
       </div>
@@ -33,4 +39,4 @@ return(
 );
 }
 
-export default Form ;
+export default Form;
